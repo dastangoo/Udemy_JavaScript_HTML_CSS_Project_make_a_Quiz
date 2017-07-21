@@ -23,6 +23,14 @@
       border: solid 1px #D8D8D8;
     }
 
+    .hide {
+      display: none;
+    }
+
+    .show {
+      display: block;
+    }
+
   </style>
 </head>
 <body>
@@ -39,6 +47,19 @@
         <div class="col-sm-6"><a data-id="4" class="btn btn-default answer">listens to HTML</a></div>
       </div>
     </div>
+
+    <div id="page2" class="row quiz hide">
+      <div class="col-sm-12">
+        <h2>Question 2</h2>
+      </div>
+      <div class="row">
+        <div class="col-sm-6"><a data-id="1" class="btn btn-default answer">1</a></div>
+        <div class="col-sm-6"><a data-id="2" class="btn btn-default answer">2</a></div>
+        <div class="col-sm-6"><a data-id="3" class="btn btn-default answer">3</a></div>
+        <div class="col-sm-6"><a data-id="4" class="btn btn-default answer">4</a></div>
+      </div>
+    </div>
+
     <div class="row pageMovement">
     	<div id="btnPrevious" class="col-xs-5 col-sm-4 btn btn-primary">Previous</div>
       <div id="btnNext" class="col-xs-5 col-sm-4 col-sm-offset-4 col-xs-offset-2 btn btn-primary">Next</div>
@@ -48,10 +69,12 @@
 </body>
 </html>
 <script type="text/javascript">
-  var curPage = 0;
-  console.dir(document);
+  var curPage = 1;
   document.getElementById("btnNext").addEventListener("click", moveNext);
   document.getElementById("btnPrevious").addEventListener("click", moveBack);
+
+  var myOne = document.getElementById("page1");
+  var myTwo = document.getElementById("page2");
 
   var classname = document.getElementsByClassName("answer");
   console.log(classname);
@@ -66,18 +89,27 @@
 
   function moveNext() {
     curPage++;
-    console.log(curPage);
-    document.getElementById("page1").innerHTML = 'Next Question Page ' + curPage;
+    checkPage(curPage);
   }
 
   function checkPage(i) {
-    console.log(curPage + 1);
-    myHeader.innerHTML = myQuiz[curPage][0];
-    console.log(myQuestion);
+    console.log(curPage);
+    if (curPage == 1) {
+      myOne.classList.add("show");
+      myOne.classList.remove("hide");
+      myTwo.classList.add("hide");
+      myTwo.classList.remove("show");
+    }
+    if (curPage == 2) {
+      myTwo.classList.add("show");
+      myTwo.classList.remove("hide");
+      myOne.classList.add("hide");
+      myOne.classList.remove("show");
+    }
   }
 
   function moveBack() {
     curPage--;
-    document.getElementById("page1").innerHTML = 'Previous Question Page ' + curPage;
+    checkPage(curPage);
   }
 </script>
