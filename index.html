@@ -17,7 +17,7 @@
       margin-right: auto;
       display: block;
       width: 80%;
-      background: #C6F3FF;
+      background: #E6FFE2;
     }
     .container {
       border: solid 1px #D8D8D8;
@@ -49,10 +49,12 @@
 </html>
 <script type="text/javascript">
   var curPage = 0;
+  console.dir(document);
   document.getElementById("btnNext").addEventListener("click", moveNext);
   document.getElementById("btnPrevious").addEventListener("click", moveBack);
 
   var classname = document.getElementsByClassName("answer");
+  console.log(classname);
   for (var i = 0; i < classname.length; i++) {
     classname[i].addEventListener("click", myAnswer, false);
   }
