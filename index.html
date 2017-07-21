@@ -4,10 +4,15 @@
   <meta charset="utf-8">
   <title>JavaScript Quiz Project</title>
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <style type="text/css">
-
+	  .col-sm-6 {
+		  border: solid 1px #D8D8D8;
+		  padding: 10px;
+	  }
+	  .pageMovement {
+		  margin-top: 10px;
+	  }
   </style>
   <script type="text/javascript">
 
@@ -16,6 +21,30 @@
 <body>
   <div class="container">
     Welcome to my Quiz
+    <div class="row">
+    	<div class="col-sm-12">
+    		<h2>Question <span></span></h2>
+    		<p>Question .....</p>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-sm-6">
+    		<p>Answer .....</p>
+    	</div>
+    	<div class="col-sm-6">
+    		<p>Answer .....</p>
+    	</div>
+    	<div class="col-sm-6">
+    		<p>Answer .....</p>
+    	</div>
+    	<div class="col-sm-6">
+    		<p>Answer .....</p>
+    	</div>
+    </div>
+    <div class="row pageMovement">
+    	<div class="col-xs-4 btn btn-primary">Previous</div>
+      <div class="col-xs-4 col-xs-offset-2 btn btn-primary">Next</div>      
+    </div>
   </div>
 
 </body>
