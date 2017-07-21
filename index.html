@@ -15,35 +15,65 @@
 	  }
   </style>
   <script type="text/javascript">
+    var curPage = 0;
+    var myQuiz = [
+      ["What is addEventListener() used for?", "attach a click event", "nothing", "never use it",
+      "listens to HTML", 1],
+      ["What does DOM stands for?", "Document Object Model", "Document over Mountains", "Do Over Models", 1]
+    ];
+    console.log(myQuiz);
+    document.getElementById("btnNext").addEventListener("click", moveNext);
+    document.getElementById("btnPrevious").addEventListener("click", moveBack);
+
+    var myQuestion = document.getElementById("questions");
+    var myHeader = document.getElementById("quizHeader");
+    var classname = document.getElementById("answer");
+    checkPage();
+    console.log(classname);
+    for (var i = 0; i < classname.length; i++) {
+      classname[i].addEventListener("click", myAnswer, false);
+    }
+
+    function myAnswer() {
+      var idAnswer = this.getAttribute("data-id");
+      document.getElementById("page1").innerHTML = 'Answer' + idAnswer;
+    }
+
+    function moveNext() {
+      curPage++;
+      checkPage(curPage);
+    }
+
+    function checkPage(i) {
+      console.log(curPage + 1);
+      myHeader.innerHTML = myQuiz[curPage][0];
+      console.log(myQuestion);
+    }
+
+    function moveBack() {
+      curPage--;
+      checkPage(curPage);
+    }
 
   </script>
 </head>
 <body>
   <div class="container">
-    Welcome to my Quiz
-    <div class="row">
+    <h1>Welcome to my Quiz</h1>
+    <div id="quizContent" class="row quiz">
     	<div class="col-sm-12">
-    		<h2>Question <span></span></h2>
-    		<p>Question .....</p>
-    	</div>
-    </div>
-    <div class="row">
-    	<div class="col-sm-6">
-    		<p>Answer .....</p>
-    	</div>
-    	<div class="col-sm-6">
-    		<p>Answer .....</p>
-    	</div>
-    	<div class="col-sm-6">
-    		<p>Answer .....</p>
-    	</div>
-    	<div class="col-sm-6">
-    		<p>Answer .....</p>
-    	</div>
+        <h2 id="quizHeader"></h2>
+      </div>
+      <div id="questions"class="row">
+        <div class="col-sm-6"><a data-id="1" class="btn btn-default answer"></a></div>
+        <div class="col-sm-6"><a data-id="2" class="btn btn-default answer"></a></div>
+        <div class="col-sm-6"><a data-id="3" class="btn btn-default answer"></a></div>
+        <div class="col-sm-6"><a data-id="4" class="btn btn-default answer"></a></div>
+      </div>
     </div>
     <div class="row pageMovement">
-    	<div class="col-xs-4 btn btn-primary">Previous</div>
-      <div class="col-xs-4 col-xs-offset-2 btn btn-primary">Next</div>      
+    	<div id="btnPrevious" class="col-xs-4 btn btn-primary">Previous</div>
+      <div id="btnNext" class="col-xs-4 col-xs-offset-2 btn btn-primary">Next</div>
     </div>
   </div>
 
