@@ -53,6 +53,10 @@
       <div id="btnNext" class="col-xs-5 col-sm-4 col-sm-offset-4 col-xs-offset-2 btn btn-primary" pull-right>Next</div>
     </div>
     <br>
+    <div class="row">
+    	<div id="finishQuiz" class="btn btn-success btn-block">Submit Quiz</div>
+    </div>
+    <br><br>
   	<div class="progress">
 		  <div id="progressbar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
 		</div>  
@@ -69,8 +73,6 @@
     ["Question 3?", 4,  "attach a click event","nothing","never use it","listens to HTML",1],
   ];
 	console.log(myQuiz.length);
-  document.getElementById("btnNext").addEventListener("click", moveNext);
-  document.getElementById("btnPrevious").addEventListener("click", moveBack);
 	
 	var myQuestions = document.getElementById("questions");
 	var myHeader = document.getElementById("quizHeader");
@@ -78,6 +80,12 @@
 	var progressBar = document.getElementById("progressbar");
 	var btnPrevious = document.getElementById("btnPrevious");
 	var btnNext = document.getElementById("btnNext");
+	var btnFinish = 	document.getElementById("finishQuiz");
+	
+	btnNext.addEventListener("click", moveNext);
+	btnPrevious.addEventListener("click", moveBack);
+	btnFinish.addEventListener("click", endQuiz);
+	
 //	console.log(myQuestions);
 	console.dir(myQuestions);
 //	console.log(myQuestions.children[0]);
@@ -129,7 +137,12 @@
 	}
 	
 	function	endQuiz(){
-		console.log('Quiz is OVER');
+		if(myAnswers[curPage]){
+			console.log('Quiz is OVER'); 
+		}
+		else{
+			console.log('not answered');
+		}
 	}
   function checkPage(i) {
 		// add remove disabled buttons if there are no more questions in queue
