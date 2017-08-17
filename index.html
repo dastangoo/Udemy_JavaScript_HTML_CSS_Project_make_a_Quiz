@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <title>JavaScript Quiz Project</title>
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
   <style type="text/css">
 	  .col-sm-6 {
 		  padding: 10px;
@@ -40,6 +41,12 @@
 			color: #00FF64;	
 		}
 		.glyphicon-remove-circle {
+			color: #FF0004;
+		}
+		.fa-check-circle-o {
+			color: #00FF64;				
+		}
+		.fa-times-circle-o {
 			color: #FF0004;
 		}
 		.selAnswer {
@@ -165,7 +172,25 @@
 	
 	function	endQuiz(){
 		if(myAnswers[curPage]){
-			console.log('Quiz is OVER'); 
+			var output = "<div class='output'>Quiz Results<br>";
+			var questionResult = "NA";
+			console.log('Quiz is OVER');
+			for(var i = 0; i < myAnswers.length; i++){
+				if(myQuiz[i][1] == myAnswers[i]) {
+					questionResult = '<i class="fa fa-check-circle-o" aria-hidden="true"></i>';
+//					questionResult = '<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>';
+					correct++;
+				}
+				else {
+					questionResult = '<i class="fa fa-times-circle-o" aria-hidden="true"></i>';
+					
+//					questionResult = '<span class="glyphicon glypicon-remove-circle" aria-hidden="true"></span>';
+				}
+				output = output + '<p>Question ' + (i+1) + ' ' + questionResult + '</p>';
+				console.log(output);
+			}
+			output = output + '<p>You scored ' + correct + ' out of ' + myQuiz.length + '</p></div> ';
+			document.getElementById("quizContent").innerHTML = output;
 		}
 		else{
 			console.log('not answered');
