@@ -87,7 +87,12 @@
 
 </body>
 </html>
+<script src="json.js"></script>
 <script type="text/javascript">
+//	console.log(data.quizcontent);
+//	for(var obj in data.quizcontent){
+//		console.log(data.quizcontent[obj].question);
+//	}
   var curPage = 0, correct = 0;
 	var myAnswers = [];
 	/// [ HEADER, IMAGE, CORRECT ANSWER, ANSWER 1, ANSWER 2, ANSWER 3, ANSWER 4]
@@ -96,9 +101,9 @@
     ["What does DOM stand for?", "http://placehold.it/300x300", 1, "Document Object Model","Document Over Mountains","Do Over Model","Nothing",1],
     ["Question 3?", "http://placehold.it/400x400", 4,  "attach a click event","nothing","never use it","listens to HTML",1],
   ];
-	console.log(myQuiz.length);
+	console.log(lengthofobject);
 	
-	var lengthofobject = myQuiz.length - 1;
+	var lengthofobject = Object(data.quizcontent).length;
 	var myQuestions = document.getElementById("questions");
 	var myHeader = document.getElementById("quizHeader");
 	var quizImage = document.getElementById("quizimage");
@@ -126,15 +131,18 @@
 	
   checkPage(0);
   console.log(classname);
+	console.log("classname.length = " + classname.length);
   for (var i = 0; i < classname.length; i++) {
     classname[i].addEventListener("click", myAnswer, false);
   }
 
   function myAnswer() {
     var idAnswer = this.getAttribute("data-id");
+//		console.log(idAnswer);
 		// Check for correct answer
 		myAnswers[curPage] = idAnswer;
-		if(myQuiz[curPage][2] == idAnswer){
+//		if(myQuiz[curPage][2] == idAnswer){
+		if(data.quizcontent[curPage][correct] == idAnswer){
 			console.log('Correct Answer');
 		}
 		else {
@@ -158,11 +166,11 @@
   function moveNext() {
 		if(myAnswers[curPage]){
 			console.log('Okay to Proceed')
-			if(curPage < (myQuiz.length-1)){
+			if(curPage < (lengthofobject-1)){
 				curPage++;
 				checkPage(curPage);
 			}
-			else if(myQuiz.length <= curPage) {
+			else if(lengthofobject <= curPage) {
 				endQuiz();
 			}
 			else {
@@ -175,12 +183,17 @@
 	}
 	
 	function	endQuiz(){
-		if(myAnswers[lengthofobject]){
+		console.log(lengthofobject);
+		console.log(myAnswers[lengthofobject]);
+		console.log(curPage);
+		console.log(myAnswers[curPage]);
+		if(myAnswers[curPage]){
 			var output = "<div class='output'>Quiz Results<br>";
 			var questionResult = "NA";
 			console.log('Quiz is OVER');
 			for(var i = 0; i < myAnswers.length; i++){
-				if(myQuiz[i][2 ] == myAnswers[i]) {
+//				if(myQuiz[i][2 ] == myAnswers[i]) {
+				if(data.quizcontent[i][correct] == myAnswers[i]){
 					questionResult = '<i class="fa fa-check-circle-o" aria-hidden="true"></i>';
 //					questionResult = '<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>';
 					correct++;
@@ -193,7 +206,7 @@
 				output = output + '<p>Question ' + (i+1) + ' ' + questionResult + '</p>';
 				console.log(output);
 			}
-			output = output + '<p>You scored ' + correct + ' out of ' + myQuiz.length + '</p></div> ';
+			output = output + '<p>You scored ' + correct + ' out of ' + lengthofobject + '</p></div> ';
 			document.getElementById("quizContent").innerHTML = output;
 		}
 		else{
@@ -209,7 +222,7 @@
 		else {
 			btnPrevious.classList.remove("hide");
 		}
-		if((curPage + 1) < (myQuiz.length)){
+		if((curPage + 1) < (lengthofobject)){
 			btnNext.classList.remove("hide");
 			btnFinish.classList.add("hide");
 		}
@@ -217,15 +230,17 @@
 			btnNext.classList.add("hide"); 
 			btnFinish.classList.remove("hide");
 		}
-		console.log('cal ' + myQuiz.length + ' ' + curPage);
+		console.log('cal ' + lengthofobject + ' ' + curPage);
 		
 		
 		
 	
 		
 		console.log(curPage+1);
-    myHeader.innerHTML = myQuiz[curPage][0];
-		quizImage.src = myQuiz[curPage][1];
+//    myHeader.innerHTML = myQuiz[curPage][0];
+    myHeader.innerHTML = data.quizcontent[curPage].question;
+//		quizImage.src = myQuiz[curPage][1];
+		quizImage.src = data.quizcontent[curPage].image;
     for (var i = 0; i < myQuestions.children.length; i++) {
       var curNode = myQuestions.children[i];
 //      console.log(curNode.childNodes[1].innerHTML);
@@ -235,7 +250,9 @@
 			console.log(curNode.childNodes[0]);
 			console.dir(curNode.childNodes[0]);
 //			console.log(curNode.childNodes[1]);
-      curNode.childNodes[0].innerHTML = capitalise(myQuiz[curPage][(i+3)]);
+//      curNode.childNodes[0].innerHTML = capitalise(myQuiz[curPage][(i+3)]);
+      curNode.childNodes[0].innerHTML = capitalise(data.quizcontent[curPage]["a"+(i+1)]);
+			
 			// Check if answered already
 			if(myAnswers[curPage] == (i+1)){
 				curNode.classList.add("selAnswer");
@@ -246,7 +263,7 @@
     }
 		
 		// Update progress bar
-		var increment = Math.ceil((curPage+1) / (myQuiz.length)*100);
+		var increment = Math.ceil((curPage+1) / (lengthofobject)*100);
 		progressBar.style.width = (increment) + '%';
 		progressBar.innerHTML = (increment) + '%';
   }
