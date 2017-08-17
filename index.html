@@ -36,23 +36,11 @@
 <body>
   <div class="container">
     <h1>Welcome to my Quiz</h1>
-    <div id="page1" class="row quiz">
+    <div id="quizContent" class="row quiz">
     	<div class="col-sm-12">
-        <h2>What is addEventListener() used for?</h2>
+        <h2 id="quizHeader"></h2>
       </div>
-      <div class="row">
-        <div class="col-sm-6"><a data-id="1" class="btn btn-default answer">attach a click event</a></div>
-        <div class="col-sm-6"><a data-id="2" class="btn btn-default answer">nothing</a></div>
-        <div class="col-sm-6"><a data-id="3" class="btn btn-default answer">never use it</a></div>
-        <div class="col-sm-6"><a data-id="4" class="btn btn-default answer">listens to HTML</a></div>
-      </div>
-    </div>
-
-    <div id="page2" class="row quiz hide">
-      <div class="col-sm-12">
-        <h2>Question 2</h2>
-      </div>
-      <div class="row">
+      <div class="row" id="questions">
         <div class="col-sm-6"><a data-id="1" class="btn btn-default answer">1</a></div>
         <div class="col-sm-6"><a data-id="2" class="btn btn-default answer">2</a></div>
         <div class="col-sm-6"><a data-id="3" class="btn btn-default answer">3</a></div>
@@ -69,14 +57,32 @@
 </body>
 </html>
 <script type="text/javascript">
-  var curPage = 1;
+  var curPage = 0;
+  var myQuiz = [
+    ["What is addEventListener() used for?", "attach a click event","nothing","never use it","listens to HTML",1],
+    ["What does DOM stand for?","Document Object Model","Document Over Mountains","Do Over Model","Nothing",1],
+    ["Question 3?", "attach a click event","nothing","never use it","listens to HTML",1],
+  ];
+	console.log(myQuiz.length);
   document.getElementById("btnNext").addEventListener("click", moveNext);
   document.getElementById("btnPrevious").addEventListener("click", moveBack);
 
-  var myOne = document.getElementById("page1");
-  var myTwo = document.getElementById("page2");
-
+	var myQuestions = document.getElementById("questions");
+//	console.log(myQuestions);
+	console.dir(myQuestions);
+//	console.log(myQuestions.children[0]);
+	console.dir(myQuestions.children[0]);
+//	console.log(myQuestions.children[1]);
+	console.dir(myQuestions.children[1]);
+//	console.log(myQuestions.children[2]);
+	console.dir(myQuestions.children[2]);
+//	console.log(myQuestions.children[3]);
+	console.dir(myQuestions.children[3]);
+	
+	
+  var myHeader = document.getElementById("quizHeader");
   var classname = document.getElementsByClassName("answer");
+	checkPage(0);
   console.log(classname);
   for (var i = 0; i < classname.length; i++) {
     classname[i].addEventListener("click", myAnswer, false);
@@ -88,28 +94,37 @@
   }
 
   function moveNext() {
-    curPage++;
-    checkPage(curPage);
-  }
-
+		if(curPage < (myQuiz.length-1)){
+			curPage++;
+			checkPage(curPage);
+		}
+		else {
+			console.log('end of quiz Page' + curPage);
+		}
+	}
   function checkPage(i) {
-    console.log(curPage);
-    if (curPage == 1) {
-      myOne.classList.add("show");
-      myOne.classList.remove("hide");
-      myTwo.classList.add("hide");
-      myTwo.classList.remove("show");
-    }
-    if (curPage == 2) {
-      myTwo.classList.add("show");
-      myTwo.classList.remove("hide");
-      myOne.classList.add("hide");
-      myOne.classList.remove("show");
+    console.log(curPage+1);
+    myHeader.innerHTML = myQuiz[curPage][0];
+    for (var i = 0; i < myQuestions.children.length; i++) {
+      var curNode = myQuestions.children[i];
+//      console.log(curNode.childNodes[1].innerHTML);
+//			console.log(myQuiz[curPage][(i+1)])
+//			console.log(curNode);
+//			console.dir(curNode);
+			console.log(curNode.childNodes[0]);
+			console.dir(curNode.childNodes[0]);
+//			console.log(curNode.childNodes[1]);
+      curNode.childNodes[0].innerHTML = myQuiz[curPage][(i+1)];
     }
   }
 
   function moveBack() {
-    curPage--;
-    checkPage(curPage);
-  }
+    if (curPage > 0) {
+      curPage--;
+      checkPage(curPage);
+    }
+    else {
+      console.log('end of quiz Page ' + curPage);
+    }
+ }
 </script>
