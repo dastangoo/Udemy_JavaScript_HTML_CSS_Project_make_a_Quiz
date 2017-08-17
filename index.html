@@ -30,6 +30,21 @@
     .show {
       display: block;
     }
+		#finishQuiz {
+			margin-top: 25px;
+		}
+		.output {
+			font-size: 20px;
+		}
+		.glyphicon-ok-circle {
+			color: #00FF64;	
+		}
+		.glyphicon-remove-circle {
+			color: #FF0004;
+		}
+		.selAnswer {
+			background: #4E9267;
+		}
 
   </style>
 </head>
@@ -54,7 +69,7 @@
     </div>
     <br>
     <div class="row">
-    	<div id="finishQuiz" class="btn btn-success btn-block">Submit Quiz</div>
+    	<div id="finishQuiz" class="btn btn-success btn-block hide">Submit Quiz</div>
     </div>
     <br><br>
   	<div class="progress">
@@ -80,7 +95,7 @@
 	var progressBar = document.getElementById("progressbar");
 	var btnPrevious = document.getElementById("btnPrevious");
 	var btnNext = document.getElementById("btnNext");
-	var btnFinish = 	document.getElementById("finishQuiz");
+	var btnFinish = document.getElementById("finishQuiz");
 	
 	btnNext.addEventListener("click", moveNext);
 	btnPrevious.addEventListener("click", moveBack);
@@ -116,6 +131,18 @@
 		}
 		console.log(myAnswers);
   }
+	
+	function addBox() {
+		for(var i = 0; i < myQuestions.children.length; i++){
+			var curNode = myQuestions.children[i];
+			if(myAnswers[curNode] == (i+1)){
+				curNode.classList.add("selAnswer");
+			}
+			else{
+				curNode.classList.remove("selAnswer");
+			}
+		}
+	}
 
   function moveNext() {
 		if(myAnswers[curPage]){
@@ -149,16 +176,17 @@
 		if(curPage == 0) {
 //			btnPrevious.classList.add("disabled");
 			btnPrevious.classList.add("hide");
-			
 		}
 		else {
 			btnPrevious.classList.remove("hide");
 		}
 		if((curPage + 1) < (myQuiz.length)){
 			btnNext.classList.remove("hide");
+			btnFinish.classList.add("hide");
 		}
 		else {
 			btnNext.classList.add("hide"); 
+			btnFinish.classList.remove("hide");
 		}
 		console.log('cal ' + myQuiz.length + ' ' + curPage);
 		
@@ -178,6 +206,13 @@
 			console.dir(curNode.childNodes[0]);
 //			console.log(curNode.childNodes[1]);
       curNode.childNodes[0].innerHTML = capitalise(myQuiz[curPage][(i+2)]);
+			// Check if answered already
+			if(myAnswers[curPage] == (i+1)){
+				curNode.classList.add("selAnswer");
+			}
+			else{
+				curNode.classList.remove("selAnswer");
+			}
     }
 		
 		// Update progress bar
