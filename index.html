@@ -61,11 +61,11 @@
 </body>
 </html>
 <script type="text/javascript">
-  var curPage = 0;
+  var curPage = 0, correct = 0;
   var myQuiz = [
-    ["What is addEventListener() used for?", "attach a click event","nothing","never use it","listens to HTML",1],
-    ["What does DOM stand for?","Document Object Model","Document Over Mountains","Do Over Model","Nothing",1],
-    ["Question 3?", "attach a click event","nothing","never use it","listens to HTML",1],
+    ["What is addEventListener() used for?", 1, "attach a click event","nothing","never use it","listens to HTML"],
+    ["What does DOM stand for?", 1, "Document Object Model","Document Over Mountains","Do Over Model","Nothing",1],
+    ["Question 3?", 4,  "attach a click event","nothing","never use it","listens to HTML",1],
   ];
 	console.log(myQuiz.length);
   document.getElementById("btnNext").addEventListener("click", moveNext);
@@ -97,7 +97,13 @@
 
   function myAnswer() {
     var idAnswer = this.getAttribute("data-id");
-    document.getElementById("page1").innerHTML = 'Answer' + idAnswer;
+		// Check for correct answer
+		if(myQuiz[curPage][1] == idAnswer){
+			console.log('Correct Answer');
+		}
+		else {
+			console.log('Wrong Answer');
+		}
   }
 
   function moveNext() {
@@ -149,7 +155,7 @@
 			console.log(curNode.childNodes[0]);
 			console.dir(curNode.childNodes[0]);
 //			console.log(curNode.childNodes[1]);
-      curNode.childNodes[0].innerHTML = myQuiz[curPage][(i+1)];
+      curNode.childNodes[0].innerHTML = myQuiz[curPage][(i+2)];
     }
 		
 		// Update progress bar
