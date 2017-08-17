@@ -49,8 +49,8 @@
     </div>
 
     <div class="row pageMovement">
-    	<div id="btnPrevious" class="col-xs-5 col-sm-4 btn btn-primary">Previous</div>
-      <div id="btnNext" class="col-xs-5 col-sm-4 col-sm-offset-4 col-xs-offset-2 btn btn-primary">Next</div>
+    	<div id="btnPrevious" class="col-xs-5 col-sm-4 btn btn-primary pull-left">Previous</div>
+      <div id="btnNext" class="col-xs-5 col-sm-4 col-sm-offset-4 col-xs-offset-2 btn btn-primary" pull-right>Next</div>
     </div>
     <br>
   	<div class="progress">
@@ -75,7 +75,8 @@
 	var myHeader = document.getElementById("quizHeader");
   var classname = document.getElementsByClassName("answer");
 	var progressBar = document.getElementById("progressbar");
-	
+	var btnPrevious = document.getElementById("btnPrevious");
+	var btnNext = document.getElementById("btnNext");
 //	console.log(myQuestions);
 	console.dir(myQuestions);
 //	console.log(myQuestions.children[0]);
@@ -104,12 +105,40 @@
 			curPage++;
 			checkPage(curPage);
 		}
+		else if(myQuiz.length <= curPage) {
+			endQuiz();
+		}
 		else {
 			console.log('end of quiz Page' + curPage);
 		}
 	}
+	
+	function	endQuiz(){
+		console.log('Quiz is OVER');
+	}
   function checkPage(i) {
-    console.log(curPage+1);
+		// add remove disabled buttons if there are no more questions in queue
+		if(curPage == 0) {
+//			btnPrevious.classList.add("disabled");
+			btnPrevious.classList.add("hide");
+			
+		}
+		else {
+			btnPrevious.classList.remove("hide");
+		}
+		if((curPage + 1) < (myQuiz.length)){
+			btnNext.classList.remove("hide");
+		}
+		else {
+			btnNext.classList.add("hide"); 
+		}
+		console.log('cal ' + myQuiz.length + ' ' + curPage);
+		
+		
+		
+	
+		
+		console.log(curPage+1);
     myHeader.innerHTML = myQuiz[curPage][0];
     for (var i = 0; i < myQuestions.children.length; i++) {
       var curNode = myQuestions.children[i];
