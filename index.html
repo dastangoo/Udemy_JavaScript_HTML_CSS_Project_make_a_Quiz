@@ -61,6 +61,7 @@
     <div id="quizContent" class="row quiz">
     	<div class="col-sm-12">
         <h2 id="quizHeader"></h2>
+        <img src="" alt="Placeholder Image" class="img-responsive" id="quizimage">
       </div>
       <div class="row" id="questions">
         <div class="col-sm-6"><a data-id="1" class="btn btn-default answer">1</a></div>
@@ -89,15 +90,18 @@
 <script type="text/javascript">
   var curPage = 0, correct = 0;
 	var myAnswers = [];
+	/// [ HEADER, IMAGE, CORRECT ANSWER, ANSWER 1, ANSWER 2, ANSWER 3, ANSWER 4]
   var myQuiz = [
-    ["What is addEventListener() used for?", 1, "attach a click event","nothing","never use it","listens to HTML"],
-    ["What does DOM stand for?", 1, "Document Object Model","Document Over Mountains","Do Over Model","Nothing",1],
-    ["Question 3?", 4,  "attach a click event","nothing","never use it","listens to HTML",1],
+    ["What is \" ' \" Quote show without error \"  is addEventListener() used for?", "http://placehold.it/200x200", 1, "attach a click event","nothing","never use it","listens to HTML"],
+    ["What does DOM stand for?", "http://placehold.it/300x300", 1, "Document Object Model","Document Over Mountains","Do Over Model","Nothing",1],
+    ["Question 3?", "http://placehold.it/400x400", 4,  "attach a click event","nothing","never use it","listens to HTML",1],
   ];
 	console.log(myQuiz.length);
 	
+	var lengthofobject = myQuiz.length - 1;
 	var myQuestions = document.getElementById("questions");
 	var myHeader = document.getElementById("quizHeader");
+	var quizImage = document.getElementById("quizimage");
   var classname = document.getElementsByClassName("answer");
 	var progressBar = document.getElementById("progressbar");
 	var btnPrevious = document.getElementById("btnPrevious");
@@ -130,7 +134,7 @@
     var idAnswer = this.getAttribute("data-id");
 		// Check for correct answer
 		myAnswers[curPage] = idAnswer;
-		if(myQuiz[curPage][1] == idAnswer){
+		if(myQuiz[curPage][2] == idAnswer){
 			console.log('Correct Answer');
 		}
 		else {
@@ -171,12 +175,12 @@
 	}
 	
 	function	endQuiz(){
-		if(myAnswers[curPage]){
+		if(myAnswers[lengthofobject]){
 			var output = "<div class='output'>Quiz Results<br>";
 			var questionResult = "NA";
 			console.log('Quiz is OVER');
 			for(var i = 0; i < myAnswers.length; i++){
-				if(myQuiz[i][1] == myAnswers[i]) {
+				if(myQuiz[i][2 ] == myAnswers[i]) {
 					questionResult = '<i class="fa fa-check-circle-o" aria-hidden="true"></i>';
 //					questionResult = '<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>';
 					correct++;
@@ -221,6 +225,7 @@
 		
 		console.log(curPage+1);
     myHeader.innerHTML = myQuiz[curPage][0];
+		quizImage.src = myQuiz[curPage][1];
     for (var i = 0; i < myQuestions.children.length; i++) {
       var curNode = myQuestions.children[i];
 //      console.log(curNode.childNodes[1].innerHTML);
@@ -230,7 +235,7 @@
 			console.log(curNode.childNodes[0]);
 			console.dir(curNode.childNodes[0]);
 //			console.log(curNode.childNodes[1]);
-      curNode.childNodes[0].innerHTML = capitalise(myQuiz[curPage][(i+2)]);
+      curNode.childNodes[0].innerHTML = capitalise(myQuiz[curPage][(i+3)]);
 			// Check if answered already
 			if(myAnswers[curPage] == (i+1)){
 				curNode.classList.add("selAnswer");
