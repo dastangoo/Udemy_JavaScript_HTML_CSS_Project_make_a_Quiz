@@ -110,15 +110,21 @@
   }
 
   function moveNext() {
-		if(curPage < (myQuiz.length-1)){
-			curPage++;
-			checkPage(curPage);
+		if(myAnswers[curPage]){
+			console.log('Okay to Proceed')
+			if(curPage < (myQuiz.length-1)){
+				curPage++;
+				checkPage(curPage);
+			}
+			else if(myQuiz.length <= curPage) {
+				endQuiz();
+			}
+			else {
+				console.log('end of quiz Page' + curPage);
+			}
 		}
-		else if(myQuiz.length <= curPage) {
-			endQuiz();
-		}
-		else {
-			console.log('end of quiz Page' + curPage);
+		else{
+			console.log('not answered');
 		}
 	}
 	
@@ -168,12 +174,18 @@
   }
 
   function moveBack() {
-    if (curPage > 0) {
-      curPage--;
-      checkPage(curPage);
-    }
-    else {
-      console.log('end of quiz Page ' + curPage);
-    }
+		if(myAnswers[curPage]){
+			console.log('Okay to Proceed')
+			if (curPage > 0) {
+				curPage--;
+				checkPage(curPage);
+			}
+			else {
+				console.log('end of quiz Page ' + curPage);
+			}
+		}
+		else {
+			console.log('not answered');
+		}
  }
 </script>
