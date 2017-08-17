@@ -164,7 +164,7 @@
 			console.log(curNode.childNodes[0]);
 			console.dir(curNode.childNodes[0]);
 //			console.log(curNode.childNodes[1]);
-      curNode.childNodes[0].innerHTML = myQuiz[curPage][(i+2)];
+      curNode.childNodes[0].innerHTML = capitalise(myQuiz[curPage][(i+2)]);
     }
 		
 		// Update progress bar
@@ -187,5 +187,8 @@
 		else {
 			console.log('not answered');
 		}
+ }
+ function capitalise(str){
+	 return str.substr(0,1).toUpperCase() + str.substr(1);
  }
 </script>
